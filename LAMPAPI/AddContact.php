@@ -11,8 +11,8 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("INSERT into Contacts (ID,FirstName,LastName,Phone,Email,UserID,DateCreated) VALUES(?,?,?,?,?,?,?)");
-		$stmt->bind_param("sssssss", $id, $fName, $lName, $phone, $email, $userId, $dateCreated);
+		$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID,DateCreated) VALUES(?,?,?,?,?,?)");
+		$stmt->bind_param("ssssss", $inData["fName"], $inData["lName"], $inData["phone"], $inData["email"], $inData["userId"], $inData["dateCreated"]);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
@@ -36,4 +36,5 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
+
 ?>
