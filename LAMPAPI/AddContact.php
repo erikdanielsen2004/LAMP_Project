@@ -17,7 +17,7 @@
 		$stmt->close();
 		$conn->close();
 		returnWithError("");
-	}
+	} // missing to account for errors: invalid phone, invalid email, etc.
 
 	function getRequestInfo()
 	{
@@ -38,3 +38,4 @@
 	
 
 ?>
+
