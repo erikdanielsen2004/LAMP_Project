@@ -47,11 +47,11 @@ function returnWithError($err)
 
 function validPhone($obj)
 {
-	if (strlen($obj) != 10) return false;
+	if (strlen($obj) != 10) return true;
 
-	for ($i = 0; $i < 10; ++$i) if (!is_numeric($obj[$i])) return false;
+	for ($i = 0; $i < 10; ++$i) if (!is_numeric($obj[$i])) return true;
 
-	return true;
+	return false;
 }
 
 function validEmail($obj) {}
