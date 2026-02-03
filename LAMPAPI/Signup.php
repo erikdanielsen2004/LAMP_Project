@@ -2,15 +2,15 @@
 
     $inData = getRequestInfo();
 
-    $firstName = $inData["firstName"];
-    $lastName = $inData["lastName"];
-    $login = $inData["login"];
-    $password = $inData["password"];
-
     $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
     if ($conn->connect_error) {
         returnWithError($conn->connect_error);
     } else {
+        $firstName = $inData["firstName"];
+        $lastName = $inData["lastName"];
+        $login = $inData["login"];
+        $password = $inData["password"];
+
         // Check if username already exists
         $stmt = $conn->prepare("SELECT ID FROM Users WHERE Login=?");
         $stmt->bind_param("s", $login);
