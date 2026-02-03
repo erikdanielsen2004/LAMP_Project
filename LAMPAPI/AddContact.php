@@ -6,26 +6,24 @@ $lastName = $inData["lastName"];
 $phone = $inData["phone"];
 $email = $inData["email"];
 $userId = $inData["userId"];
-$dateCreated = $inData["dateCreated"];
+
+date_default_timezone_set("America/New_York");
+$dateCreated = date("Y-m-d");
 
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if ($conn->connect_error) {
 	returnWithError($conn->connect_error);
 } else {
-	if (validPhone($phone)) {
-
-		returnWithError("Invalid phone number.");
+	if (!validPhone($phone)) returnWithError("Invalid phone number.");
+	else if (!validEmail($email)) returnWithError("Invalid email.");
+	else {
+		$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID,DateCreated) VALUES(?,?,?,?,?,?)");
+		$stmt->bind_param("ssssis", $firstName, $lastName, $phone, $email, $userId, $dateCreated);
+		$stmt->execute();
+		$stmt->close();
+		$conn->close();
+		returnWithError("");
 	}
-	if (validEmail($email)) {
-
-		returnWithError("Invalid email number.");
-	}
-	$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID,DateCreated) VALUES(?,?,?,?,?,?)");
-	$stmt->bind_param("ssssss", $firstName, $lastName, $phone, $email, $userId, $dateCreated);
-	$stmt->execute();
-	$stmt->close();
-	$conn->close();
-	returnWithError("");
 }
 
 function getRequestInfo()
@@ -47,11 +45,16 @@ function returnWithError($err)
 
 function validPhone($obj)
 {
-	if (strlen($obj) != 10) return true;
+	if (strlen($obj) != 10) return false;
 
-	for ($i = 0; $i < 10; ++$i) if (!is_numeric($obj[$i])) return true;
+	for ($i = 0; $i < 10; ++$i) if (!is_numeric($obj[$i])) return false;
 
-	return false;
+	return true;
 }
 
-function validEmail($obj) {}
+function validEmail($obj)
+{
+	return filter_var($obj, FILTER_VALIDATE_EMAIL);
+
+}
+?>
