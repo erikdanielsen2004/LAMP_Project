@@ -1,19 +1,20 @@
 <?php
 $inData = getRequestInfo();
 
-$firstName = $inData["firstName"];
-$lastName = $inData["lastName"];
-$phone = $inData["phone"];
-$email = $inData["email"];
-$userId = $inData["userId"];
-
-date_default_timezone_set("America/New_York");
-$dateCreated = date("Y-m-d");
-
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if ($conn->connect_error) {
 	returnWithError($conn->connect_error);
 } else {
+	
+	$firstName = $inData["firstName"];
+	$lastName = $inData["lastName"];
+	$phone = $inData["phone"];
+	$email = $inData["email"];
+	$userId = $inData["userId"];
+
+	date_default_timezone_set("America/New_York");
+	$dateCreated = date("Y-m-d");
+	
 	if (!validPhone($phone)) returnWithError("Invalid phone number.");
 	else if (!validEmail($email)) returnWithError("Invalid email.");
 	else {
@@ -24,6 +25,7 @@ if ($conn->connect_error) {
 		$conn->close();
 		returnWithError("");
 	}
+	
 }
 
 function getRequestInfo()
@@ -57,4 +59,5 @@ function validEmail($obj)
 	return filter_var($obj, FILTER_VALIDATE_EMAIL);
 
 }
+
 ?>
