@@ -9,11 +9,8 @@
 	} 
 	else
 	{
-        $contactId = $inData["ID"];
-		$userId = $inData["UserID"];
-
         $stmt = $conn->prepare("DELETE FROM Contacts WHERE ID=? and UserID=?");
-        $stmt->bind_param("ii", $inData["contactId"], $inData["userId"]);
+        $stmt->bind_param("ii", $inData["ID"], $inData["UserID"]);
 		$stmt->execute();
 		
 		if( $stmt->affected_rows == 0 )
