@@ -9,7 +9,7 @@
 	} 
 	else
 	{
-        $stmt = $conn->prepare("delete from Contacts where FirstName like ? and LastName like ? and UserID=?");
+        $stmt = $conn->prepare("DELETE FROM Contacts WHERE FirstName=? and LastName=? and UserID=?");
         $stmt->bind_param("sss", $firstName, $lastName, $inData["userId"]);
 		$stmt->execute();
 		
