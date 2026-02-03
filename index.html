@@ -16,6 +16,22 @@
 	<input type="password" id="loginPassword" placeholder="Password"/><br />
 	<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Do It </button>
 	<span id="loginResult"></span>
+	<button type="button" class="buttons" onclick="showSignup();">
+	Create an account
+</button>
+</div>
+
+
+<div>
+	<h2>Sign Up</h2>
+	<input type="text" id="firstName" placeholder="First Name" />
+	<input type="text" id="lastName" placeholder="Last Name" />
+	<input type="text" id="login" placeholder="Username" />
+	<input type="password" id="password" placeholder="Password"/>
+	<button type="button" class="buttons" onclick="doSignUp();"> Sign Up </button>
+	<span id="signupResult"></span>
+	<br /><br />
+	<button type="button" class="buttons" onclick="showLogin();"> Go to Login </button>
 </div>
 
 </body>

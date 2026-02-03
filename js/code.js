@@ -1,4 +1,4 @@
-const urlBase = 'https://COP4331-5.com/LAMPAPI';
+const urlBase = 'https://lamp-group18.com/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -59,7 +59,7 @@ function doLogin()
 
 function doSignup()
 {
-	const fisrtName = document.getElementById("firstName").value;
+	const firstName = document.getElementById("firstName").value;
 	const lastName = document.getElementById("lastName").value;
 	const login = document.getElementById("login").value;
 	const password = document.getElementById("password").value;
@@ -68,10 +68,10 @@ function doSignup()
 
 	let hash = md5(password);
 
-	let tmp = {firstName:fisrtName, lastName:lastName, login:login, password:hash};
+	let tmp = {firstName:firstName, lastName:lastName, login:login, password:hash};
 	let jsonPayload = JSON.stringify(tmp);
 
-	let url = urlBase + '/SignUp.' + extension;
+	let url = urlBase + '/Signup.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -80,13 +80,16 @@ function doSignup()
 	{
 		xhr.onreadystatechange = function() 
 		{
-			if (this.readyState == 4 && this.status == 200) 
+			if (this.readyState != 4)
+				return;
+
+			if ( this.status == 200) 
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
 
-				if(userId < 1)
+				if(jsonObject.error && jsonObject.error.length > 0)
 				{		
-					document.getElementById("signupResult").innerHTML = "Signup failed";
+					document.getElementById("signupResult").innerHTML = jsonObject.error;
 					return;
 				}
 
@@ -107,6 +110,18 @@ function doSignup()
 		document.getElementById("signupResult").innerHTML = err.message;
 	}
 
+}
+
+function showSignup()
+{
+	document.getElementById("loginDiv").style.display = "none";
+	document.getElementById("signupDiv").style.display = "block";
+}
+
+function showLogin()
+{
+	document.getElementById("signupDiv").style.display = "none";
+	document.getElementById("loginDiv").style.display = "block";
 }
 
 function saveCookie()
