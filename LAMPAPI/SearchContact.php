@@ -19,17 +19,17 @@
 		if ($lastName == "%%") {
 
 			$stmt = $conn->prepare("select FirstName, LastName from Contacts where FirstName like ? and UserID=?");
-			$stmt->bind_param("ss", $firstName, $inData["userId"]);
+			$stmt->bind_param("si", $firstName, $inData["userId"]);
 
 		} else if ($firstName == "%%") {
 
 			$stmt = $conn->prepare("select FirstName, LastName from Contacts where LastName like ? and UserID=?");
-			$stmt->bind_param("ss", $lastName, $inData["userId"]);
+			$stmt->bind_param("si", $lastName, $inData["userId"]);
 
 		} else {
 
 			$stmt = $conn->prepare("select FirstName, LastName from Contacts where FirstName like ? and LastName like ? and UserID=?");
-			$stmt->bind_param("sss", $firstName, $lastName, $inData["userId"]);
+			$stmt->bind_param("ssi", $firstName, $lastName, $inData["userId"]);
 
 		}
 		
