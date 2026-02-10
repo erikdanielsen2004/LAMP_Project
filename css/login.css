@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Left Side - Light (cornsilk) */
+.left-side {
+    flex: 1;
+    background-color: cornsilk;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    transition: all 0.5s ease;
+}
+
+.left-side.active {
+    flex: 1.2;
+}
+
+/* Right Side - Dark (#371722) */
+.right-side {
+    flex: 1;
+    background-color: #371722;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    transition: all 0.5s ease;
+}
+
+.right-side.empty {
+    flex: 0.8;
+}
+
+/* Content containers */
+.login-content,
+.signup-content {
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 0.5s ease;
+}
+
+.signup-content {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Headings */
+.login-content h1,
+.signup-content h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: cornsilk;
+}
+
+.signup-content h2 {
+    color: #371722;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: rgba(255, 248, 220, 0.7);
+    margin-bottom: 40px;
+}
+
+/* Input Groups with underline style */
+.input-group {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 248, 220, 0.3);
+    outline: none;
+    color: cornsilk;
+    font-family: 'Ubuntu', sans-serif;
+    transition: border-color 0.3s;
+}
+
+.signup-content .input-group input {
+    border-bottom: 2px solid rgba(55, 23, 34, 0.3);
+    color: #371722;
+}
+
+.input-group input:focus {
+    border-bottom-color: cornsilk;
+}
+
+.signup-content .input-group input:focus {
+    border-bottom-color: #371722;
+}
+
+/* floating labels for when input is focused or has text */
+
+.input-group label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    font-size: 16px;
+    color: rgba(255, 248, 220, 0.5);
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+.signup-content .input-group label {
+    color: rgba(55, 23, 34, 0.5);
+}
+
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
+    top: -20px;
+    font-size: 12px;
+    color: cornsilk;
+}
+
+.signup-content .input-group input:focus ~ label,
+.signup-content .input-group input:valid ~ label {
+    color: #371722;
+}
+
+/* Buttons */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: cornsilk;
+    color: #371722;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: 'Ubuntu', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.signup-content .submit-btn {
+    background-color: #371722;
+    color: cornsilk;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.login-content .submit-btn:hover {
+    background-color: rgba(255, 248, 220, 0.9);
+}
+
+.signup-content .submit-btn:hover {
+    background-color: rgba(55, 23, 34, 0.9);
+}
+
+/* Result messages */
+.result-message {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ff6b6b;
+    text-align: center;
+    min-height: 20px;
+}
+
+.signup-content .result-message {
+    color: #d32f2f;
+}
+
+/* Toggle text */
+.toggle-text {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 248, 220, 0.7);
+}
+
+.signup-content .toggle-text {
+    color: rgba(55, 23, 34, 0.7);
+}
+
+.toggle-text a {
+    color: cornsilk;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.signup-content .toggle-text a {
+    color: #371722;
+}
+
+.toggle-text a:hover {
+    color: #F3B02E;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-side,
+    .right-side {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .left-side.active,
+    .right-side.empty {
+        flex: 1;
+    }
+
+    .login-content h1,
+    .signup-content h2 {
+        font-size: 36px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+}

@@ -1,0 +1,72 @@
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: cornsilk;
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* Button styling */
+.nav-buttons button {
+    padding: 10px 25px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Login button */
+.login-btn {
+    background-color: transparent;
+    color: #371722;
+}
+
+.login-btn:hover {
+    background-color: #371722;
+    color: cornsilk;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Signup button */
+.signup-btn {
+    background-color: transparent;
+    color: #371722;
+}
+
+.signup-btn:hover {
+    background-color: #371722;
+    color: cornsilk;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#title {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 48px;
+    color: #371722;
+    text-align: center;
+    margin: 0;
+}
