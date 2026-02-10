@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     $password  = trim($inData["password"] ?? "");
 
     // Check for blank fields
-    if ($firstName === "" || $lastName === "" || $login === "" || $password === "") {
+    if ($firstName == "" || $lastName == "" || $login == "" || $password == "") {
         returnWithError("All fields are required");
         $conn->close();
         return;
@@ -32,17 +32,13 @@ if ($conn->connect_error) {
     }
     $stmt->close();
 
-    // Hash password
-    $hashedPassword = md5($password);
-
     // Insert new user
     $stmt = $conn->prepare(
         "INSERT INTO Users (FirstName, LastName, Login, Password)
                 VALUES (?, ?, ?, ?)"
     );
-    $stmt->bind_param("ssss", $firstName, $lastName, $login, $hashedPassword); // $hashedPassword
+    $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
     $stmt->execute();
-
     $stmt->close();
     $conn->close();
 
