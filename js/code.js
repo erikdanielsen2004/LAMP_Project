@@ -124,6 +124,20 @@ function showLogin()
 	document.getElementById("loginDiv").style.display = "block";
 }
 
+// Show the add contact modal
+function showAddContactModal()
+{
+	document.getElementById("addContactModal").style.display = "block";
+}
+
+function hideAddContactModal()
+{
+	document.getElementById("addContactModal").style.display = "none";
+	// Clear the form
+	document.getElementById("addContactForm").reset();
+	document.getElementById("addContactResult").innerHTML = "";
+}
+
 function saveCookie()
 {
 	let minutes = 20;
@@ -233,3 +247,4 @@ function searchContact()
 	}
 	
 }
+
