@@ -109,11 +109,34 @@ function showLogin() {
     document.getElementById("loginDiv").style.display = "block";
 }
 
+<<<<<<< HEAD
 function saveCookie() {
     let minutes = 20;
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
     document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+=======
+// Show the add contact modal
+function showAddContactModal()
+{
+	document.getElementById("addContactModal").style.display = "block";
+}
+
+function hideAddContactModal()
+{
+	document.getElementById("addContactModal").style.display = "none";
+	// Clear the form
+	document.getElementById("addContactForm").reset();
+	document.getElementById("addContactResult").innerHTML = "";
+}
+
+function saveCookie()
+{
+	let minutes = 20;
+	let date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));	
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+>>>>>>> 2f3538241bae7ad6aaafd2cf5fa28ca7d2f8be83
 }
 
 function readCookie() {
