@@ -6,13 +6,13 @@ $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if ($conn->connect_error) {
     returnWithError($conn->connect_error);
 } else {
-    $firstName = $inData["firstName"];
-    $lastName = $inData["lastName"];
-    $login = $inData["login"];
-    $password = $inData["password"];
+    $firstName = trim($inData["firstName"] ?? "");
+    $lastName  = trim($inData["lastName"] ?? "");
+    $login     = trim($inData["login"] ?? "");
+    $password  = trim($inData["password"] ?? "");
 
     // Check for blank fields
-    if (empty($firstName) || empty($lastName) || empty($login) || empty($password)) {
+    if ($firstName === "" || $lastName === "" || $login === "" || $password === "") {
         returnWithError("All fields are required");
         $conn->close();
         return;
