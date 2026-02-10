@@ -33,14 +33,14 @@ if ($conn->connect_error) {
     $stmt->close();
 
     // Hash password
-    // $hashedPassword = md5($password, PASSWORD_DEFAULT);
+    $hashedPassword = md5($password);
 
     // Insert new user
     $stmt = $conn->prepare(
         "INSERT INTO Users (FirstName, LastName, Login, Password)
                 VALUES (?, ?, ?, ?)"
     );
-    $stmt->bind_param("ssss", $firstName, $lastName, $login, $password); // $hashedPassword
+    $stmt->bind_param("ssss", $firstName, $lastName, $login, $hashedPassword); // $hashedPassword
     $stmt->execute();
 
     $stmt->close();
