@@ -1,38 +1,17 @@
 <html>
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
+    <title>LAMP Group 18</title>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
-
-<div id="loginDiv">
-	<span id="inner-title">PLEASE LOG IN</span>
-	<input type="text" id="loginName" placeholder="Username" /><br />
-	<input type="password" id="loginPassword" placeholder="Password"/><br />
-	<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Login </button>
-	<span id="loginResult"></span>
-	<button type="button" class="buttons" onclick="showSignup();">
-	Create an account
-</button>
-</div>
-
-
-<div id="signupDiv">
-	<h2>Sign Up</h2>
-	<input type="text" id="firstName" placeholder="First Name" />
-	<input type="text" id="lastName" placeholder="Last Name" />
-	<input type="text" id="login" placeholder="Username" />
-	<input type="password" id="password" placeholder="Password"/>
-	<button type="button" class="buttons" onclick="doSignup();"> Sign Up </button>
-	<span id="signupResult"></span>
-	<br /><br />
-	<button type="button" class="buttons" onclick="showLogin();"> Go to Login </button>
-</div>
-
+    <div class="center-content">
+        <h1 id="title">Welcome to LAMP Group 18</h1>
+        <div class="nav-buttons">
+            <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+            <button class="signup-btn" onclick="window.location.href='login.html?signup=true'">Sign Up</button>
+        </div>
+    </div>
 </body>
 </html>
