@@ -15,7 +15,8 @@ if ($conn->connect_error) {
 	date_default_timezone_set("America/New_York");
 	$dateCreated = date("Y-m-d");
 	
-	if (!validPhone($phone)) returnWithError("Invalid phone number.");
+	if ($firstName == "") returnWithError("Cannot have blank first name.");
+	else if (!validPhone($phone)) returnWithError("Invalid phone number.");
 	else if (!validEmail($email)) returnWithError("Invalid email.");
 	else {
 		$stmt = $conn->prepare("INSERT into Contacts (FirstName,LastName,Phone,Email,UserID,DateCreated) VALUES(?,?,?,?,?,?)");
