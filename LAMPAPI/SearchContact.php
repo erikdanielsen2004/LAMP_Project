@@ -38,7 +38,7 @@ if ($conn->connect_error) {
 			$searchResults .= ",";
 		}
 		$searchCount++;
-		$searchResults .= '"' . $row["FirstName"] . ',' . $row["LastName"] . ',' . $row["phone"] . ',' . $row["email"] . '"';
+		$searchResults .= '"' . $row["FirstName"] . ' ' . $row["LastName"] . '"';
 	}
 
 	if ($searchCount == 0) {
