@@ -175,7 +175,33 @@ function addContact() {
 
     let url = urlBase + '/AddContact.';
     let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState != 4) return;
+
+            if (this.status != 200) {
+                document.getElementById("addContactResult").innerHTML = "Failed to add contact.";
+                return;
+            }
+
+            let jsonObject = JSON.parse(xhr.responseText);
+
+            if (jsonObject.error && jsonObject.error.length > 0) {
+                document.getElementById("addContactResult").innerHTML = jsonObject.error;
+                return;
+            }
+
+            
+            hideAddContactModal();
+            searchContact();
+        };
+        xhr.send(JSON.stringify(payload));
+    } catch (err) {
+        document.getElementById("addContactResult").innerHTML = err.message;
+    }
 }
 
 function searchContact() {
@@ -229,4 +255,5 @@ function searchContact() {
     }
 
 }
+
 
