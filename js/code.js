@@ -117,17 +117,15 @@ function saveCookie() {
 }
 
 // Show the add contact modal
-function showAddContactModal()
-{
-	document.getElementById("addContactModal").style.display = "block";
+function showAddContactModal() {
+    document.getElementById("addContactModal").style.display = "block";
 }
 
-function hideAddContactModal()
-{
-	document.getElementById("addContactModal").style.display = "none";
-	// Clear the form
-	document.getElementById("addContactForm").reset();
-	document.getElementById("addContactResult").innerHTML = "";
+function hideAddContactModal() {
+    document.getElementById("addContactModal").style.display = "none";
+    // Clear the form
+    document.getElementById("addContactForm").reset();
+    document.getElementById("addContactResult").innerHTML = "";
 }
 
 function readCookie() {
@@ -165,7 +163,7 @@ function doLogout() {
 }
 
 function addContact() {
-    let firstName = document.getElementById("contactFisrt").value;
+    let firstName = document.getElementById("contactFirst").value;
     let lastName = document.getElementById("contactLast").value;
     let phone = document.getElementById("contactPhone").value;
     let email = document.getElementById("contactEmail").value;
@@ -175,7 +173,7 @@ function addContact() {
 
     let url = urlBase + '/AddContact.';
     let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
     try {
@@ -194,7 +192,7 @@ function addContact() {
                 return;
             }
 
-            
+
             hideAddContactModal();
             searchContact();
         };
@@ -205,10 +203,8 @@ function addContact() {
 }
 
 function searchContact() {
-    readCookie();
     let srch = document.getElementById("searchText").value.trim();
-    document.getElementById("contactSearchResult").innerHTML = "";
-    document.getElementById("contactList").innerHTML = "";
+    document.getElementById("tbody").innerHTML = "";
 
     let searchId = {
         firstNameSearch: srch,
@@ -226,27 +222,31 @@ function searchContact() {
             if (this.readyState != 4)
                 return;
             if (this.status != 200) {
-                document.getElementById("contactSearchResult").innerHTML = "Search Failed";
+                document.getElementById("tbody").innerHTML = "Search Failed";
+                return;
+            }
+            let jsonObject = JSON.parse(xhr.responseText);
+
+            if (jsonObject.error && jsonObject.error.length > 0) {
+                document.getElementById("tbody").innerHTML =
+                    '<tr><td style="color: red;">' + jsonObject.error + '</td></tr>';
                 return;
             }
 
-            let jsonObject = JSON.parse(xhr.responseText);
-            if (jsonObject.error && jsonObject.error.length > 0) {
-                document.getElementById("contactSearchResult").innerHTML = jsonObject.error;
-                document.getElementById("contactList").innerHTML = "";
-                return
-            }
-
-            document.getElementById("contactSearchResult").innerHTML = "Contacts Retrieved";
-
-            let contactList = "";
+            let tableRows = "";
             for (let i = 0; i < jsonObject.results.length; i++) {
-                contactList += jsonObject.results[i];
-                if (i < jsonObject.results.length - 1) {
-                    contactList += "<br>";
-                }
+                tableRows += "<tr>" +
+                    "<td>" + jsonObject.results[i].firstName + "</td>" +
+                    "<td>" + jsonObject.results[i].lastName + "</td>" +
+                    "<td>" + jsonObject.results[i].phone + "</td>" +
+                    "<td>" + jsonObject.results[i].email + "</td>" +
+                    "</tr>";
             }
-            document.getElementById("contactList").innerHTML = contactList;
+
+            if (jsonObject.results.length === 0) {
+                tableRows = "<tr><td>No contacts found</td></tr>";
+            }
+            document.getElementById("tbody").innerHTML = tableRows;
         };
         xhr.send(JSON.stringify(searchId));
     }
@@ -255,5 +255,6 @@ function searchContact() {
     }
 
 }
+
 
 
