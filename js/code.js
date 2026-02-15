@@ -165,39 +165,58 @@ function doLogout() {
 function addContact() {
     let firstName = document.getElementById("contactFirst").value;
     let lastName = document.getElementById("contactLast").value;
-    let phone = document.getElementById("contactPhone").value;
+    let phone = document.getElementById("contactNumber").value;
     let email = document.getElementById("contactEmail").value;
 
-    let payload = { firstName, lastName, phone, email, userId }
+    document.getElementById("addContactResult").innerHTML = "";
+    phone = phone.replace(/\D/g, '');
+
+    if (!firstName || !lastName || !phone || !email) {
+        document.getElementById("addContactResult").innerHTML = "All fields are required.";
+        return;
+    }
+
+    let payload = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        email: email,
+        userId: userId
+    };
+
     let jsonPayload = JSON.stringify(payload);
 
-    let url = urlBase + '/AddContact.';
+    let url = urlBase + '/AddContact.' + extension;
+
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
     try {
         xhr.onreadystatechange = function () {
-            if (this.readyState != 4) return;
+            if (this.readyState != 4)
+                return;
+            if (this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
 
-            if (this.status != 200) {
+                if (jsonObject.error && jsonObject.error.length > 0) {
+                    document.getElementById("addContactResult").innerHTML = jsonObject.error;
+                    return;
+                }
+
+                document.getElementById("addContactResult").innerHTML = "Contact added successfully.";
+
+                setTimeout(function () {
+                    hideAddContactModal();
+                    searchContact();
+                }, 1000);
+            }
+            else {
                 document.getElementById("addContactResult").innerHTML = "Failed to add contact.";
-                return;
             }
-
-            let jsonObject = JSON.parse(xhr.responseText);
-
-            if (jsonObject.error && jsonObject.error.length > 0) {
-                document.getElementById("addContactResult").innerHTML = jsonObject.error;
-                return;
-            }
-
-
-            hideAddContactModal();
-            searchContact();
         };
-        xhr.send(JSON.stringify(payload));
-    } catch (err) {
+        xhr.send(jsonPayload);
+    }
+    catch (err) {
         document.getElementById("addContactResult").innerHTML = err.message;
     }
 }
@@ -256,5 +275,51 @@ function searchContact() {
 
 }
 
+function deleteContact(contactId) {
+    if (!confirm("Are you sure you want to delete this contact?")) {
+        return;
+    }
+
+    readCookie();
+
+    let payload = {
+        id: contactId,
+        userId: userId
+    };
+    let jsonPayload = JSON.stringify(payload);
+
+    let url = urlBase + '/DeleteContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState != 4)
+                return;
+
+            if (this.status != 200) {
+                alert("Failed to delete contact");
+                return;
+            }
+
+            let jsonObject = JSON.parse(xhr.responseText);
+
+            if (jsonObject.error && jsonObject.error.length > 0) {
+                alert("Error: " + jsonObject.error);
+                return;
+            }
+
+            alert(jsonObject.message || "Contact deleted successfully");
+            searchContact();
+        };
+
+        xhr.send(jsonPayload);
+    }
+    catch (err) {
+        alert("Error: " + err.message);
+    }
+}
 
 
