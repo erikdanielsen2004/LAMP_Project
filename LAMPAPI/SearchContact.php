@@ -16,21 +16,25 @@
 		$firstName = "%" . $inData["firstNameSearch"] . "%";
 		$lastName = "%" . $inData["lastNameSearch"] . "%";
 
-		if ($lastName == "%%") {
+		//loads all contacts so we dont have to make load contact
+		if ($lastName == "%%" && $firstName == "%%") {
 
 			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where UserId=? order by LastName, FirstName");
 			$stmt->bind_param("i", $inData["userId"]);
 
+		  //searchs by first name
 		} else if ($lastName == "%%") {
 
 			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where FirstName like ? and UserID=? order by LastName, FirstName");
 			$stmt->bind_param("si", $firstName, $inData["userId"]);
 
+		  //searchs by last name
 		} else if ($firstName == "%%") {
 
 			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where LastName like ? and UserId=? order by LastName, FirstName");
 			$stmt->bind_param("si", $lastName, $inData["userId"]);
-
+			
+		  //searchs by first and last name
 		} else {
 
 			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where (FirstName like ? or LastName like ?) and UserID=? order by LastName, FirstName");
