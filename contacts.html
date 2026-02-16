@@ -26,8 +26,6 @@
 	<div class="sidenav-content">
 		<img id="logo" src="images/18logo.png" alt="logo image">
 
-		<a href="contacts.html">Contacts</a>
-		<a href="members.html">About Us</a>
 	</div>
 
 	<a href="#" class="search-btn" type="button" id="logoutButton" class="buttons font" onclick="doLogout();"> logout <i
@@ -70,7 +68,7 @@
 			<table id="contacts" cellpadding="0" cellspacing="0" border="0">
 				<thead>
 					<tr>
-						<th>Contact Name</th>
+						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Phone</th>
 						<th>Email</th>
@@ -112,5 +110,46 @@
 			<div id="addContactResult"></div>
 			<div class="modal-buttons">
 				<button type="button" class="btn-cancel" onclick="hideAddContactModal()">Cancel</button>
-				<button type="button" class="btn-submit" onclick="addContact()">Add Contact</button>
+				<button type="submit" class="btn-submit">Add Contact</button>
 			</div>
+		</form>
+	</div>
+</div>
+
+<!-- Edit Contact Modal -->
+	<div id="editContactModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Edit Contact</h2>
+			</div>
+			<form id="editContactForm" onsubmit="event.preventDefault(); editContact();">
+				<input type="hidden" id="editContactId">
+				<div class="form-group">
+					<label for="editContactFirst">First Name *</label>
+					<input type="text" id="editContactFirst" placeholder="First name" required>
+				</div>
+				<div class="form-group">
+					<label for="editContactLast">Last Name *</label>
+					<input type="text" id="editContactLast" placeholder="Last name" required>
+				</div>
+				<div class="form-group">
+					<label for="editContactNumber">Phone Number *</label>
+					<input type="text" id="editContactNumber" placeholder="XXX-XXX-XXXX" required
+						pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
+				</div>
+				<div class="form-group">
+					<label for="editContactEmail">Email *</label>
+					<input type="email" id="editContactEmail" placeholder="name@email.com" required
+						pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+				</div>
+				<div id="editContactResult"></div>
+				<div class="modal-buttons">
+					<button type="button" class="btn-cancel" onclick="hideEditContactModal()">Cancel</button>
+					<button type="submit" class="btn-submit">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>
