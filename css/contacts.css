@@ -19,7 +19,6 @@ body {
     overflow: hidden;
 }
 
-
 .loggedInDiv {
     font-family: 'Ubuntu';
     font-weight: bolder;
@@ -40,7 +39,7 @@ body {
     vertical-align: middle;
 }
 
-.column button {
+.column button{
     position: relative;
     background: white;
     color: #371722;
@@ -50,7 +49,7 @@ body {
     width: 50px;
     height: 50px;
     font-size: 18px;
-    display: flex;
+    display: inline-flex;
     border: none;
     justify-content: center;
     align-items: center;
@@ -60,108 +59,39 @@ body {
     transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.tables {
-    align-self: center;
-}
-
-.addContacts {
-    align-self: center;
-}
-
-/* add contacts table formatting */
-#addMe {
-    font-family: 'Ubuntu';
-    display: none;
-    border-radius: 17px;
-    position: relative;
-    background: rgba(234, 207, 155, 0.9);
-    max-width: 350px;
-    margin: 0 auto 50px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
-
-#addMe input {
-    border-radius: 17px;
-    font-family: 'Ubuntu';
-    outline: 0;
-    background: #f2f2f2;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-
-#addMe>input:valid {
-    border: 2px solid #009345;
-    ;
-}
-
-#addMe>input:invalid {
-    border: 2px solid red;
-}
-
-#addMe>input:invalid:required {
-    background-image: white;
-}
-
-#addMe button {
-    border-radius: 17px;
-    font-family: 'Ubuntu';
-    outline: 0;
-    background: #78500b;
-    color: rgba(234, 207, 155, 0.9);
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-#contacts td input {
-    border-radius: 17px;
-    font-family: 'Ubuntu';
-    outline: 0;
-    background: #fbde99;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-/* button formatting */
-.btn {
+#contacts td .action-btn {
+    background: none !important;
+    background-color: transparent !important;
+    border: none;
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    padding: 5px 8px;
+    margin: 0 4px;
+    font-size: 18px;
     color: #371722;
     font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: bolder;
-    font-size: 2.3vw;
-    background: none;
-    border: none;
+    font-weight: 600;
+    box-shadow: none !important;
+    display: inline-flex;
     cursor: pointer;
-    padding: 0.3em 1.2em;
-    margin: 0.6em 0.3em 0.3em 0;
-    float: right;
 }
 
-.btn:hover {
-    color: #897261;
+#contacts td .action-btn i {
+    color: #371722;
 }
 
+/* Dark variant for add-contact style buttons */
 .column button.add-contact-btn {
     background-color: #371722;
 }
 
 .column button.add-contact-btn i {
     color: cornsilk;
+}
+
+.tables {
+    align-self: center;
 }
 
 /* search bar formatting */
@@ -175,20 +105,15 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: 0.8s;
     border-bottom: 2px solid rgba(55, 23, 34, 0.3);
-    color: #371722
-}
-
-.search-container:hover>.search-input {
-    width: 400px;
+    color: #371722;
 }
 
 .search-container .search-input {
     background: transparent;
     border: none;
     outline: none;
-    width: 100px;
+    width: 180px;
     font-family: 'Ubuntu';
     font-weight: 500;
     font-size: 16px;
@@ -197,10 +122,6 @@ body {
 
 .search-container .search-btn .fas {
     color: #371722;
-}
-
-.search-container:hover {
-    animation: linear;
 }
 
 span {
@@ -219,12 +140,9 @@ p {
     height: 500px;
 }
 
-
 table {
-    width:100%;
+    width: 100%;
     table-layout: fixed;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
 }
 
@@ -235,11 +153,6 @@ table {
     border: 2px solid #371722;
 }
 
-#contacts td,
-#contacts th {
-    border: 1px solid (155, 188, 115, 0.9);
-}
-
 #contacts tr:hover {
     background-color: #478fbb;
 }
@@ -248,12 +161,15 @@ table {
     padding: 20px 15px;
     text-align: left;
     font-family: 'Ubuntu';
-    font-weight: 500;
-    font-size: 16px;
     font-weight: bold;
+    font-size: 16px;
     color: cornsilk;
     background-color: #371722;
     text-transform: uppercase;
+    table-layout: fixed;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 #contacts td {
@@ -261,12 +177,12 @@ table {
     text-align: left;
     font-family: 'Ubuntu';
     vertical-align: middle;
-    font-weight: 300;
-    font-size: 15px;
     font-weight: bold;
+    font-size: 15px;
     color: #66471b;
     background-color: cornsilk;
 }
+
 #contacts td span {
     display: block;
     white-space: nowrap;
@@ -275,18 +191,16 @@ table {
     color: #66471b;
 }
 
-/* Add a spinning animation on hover */
 .fa-sync-alt:hover {
-  animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-
-/*side navigation menu*/
+/* side navigation menu */
 .sidenav img {
     display: block;
     margin-left: auto;
@@ -303,13 +217,10 @@ table {
     left: 0px;
     top: 0px;
     overflow: auto;
-    /*disables horizontal scroll*/
     position: fixed;
-    /*scroll bar stays in place when user is scrolling*/
     background: #371722;
 }
 
-/*navigation links*/
 .sidenav a {
     padding: 10px 0px 15px 0px;
     display: block;
@@ -326,16 +237,6 @@ table {
 .buttons {
     padding: 10px 0px 15px 0px;
     display: block;
-}
-
-/*buttons that are on the sidebar*/
-.sidebuttons {
-    padding: 10px 0px 15px 0px;
-    display: inline-block;
-}
-
-.sidebuttons:hover {
-    color: #897261;
 }
 
 .buttons:hover {
@@ -396,20 +297,6 @@ table {
     color: rgb(211, 199, 163);
 }
 
-.close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    background: none;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-}
-
 .form-group {
     margin-bottom: 15px;
 }
@@ -466,7 +353,7 @@ table {
 }
 
 .btn-cancel {
-   background-color: #371722;
+    background-color: #371722;
     color: cornsilk;
 }
 
@@ -482,21 +369,7 @@ table {
     text-align: center;
 }
 
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    margin: 0 5px;
-    color: #007D2F;
-    transition: color 0.3s;
-}
-
-.btn-icon:hover {
-    color: #005a21;
-}
-
-/* make sidebar a topbar for mobile view*/
+/* make sidebar a topbar for mobile view */
 @media screen and (max-width: 700px) {
     body {
         background-image: url('../images/backgroundmobile2.png');
@@ -505,17 +378,8 @@ table {
     .sidenav {
         width: 100%;
         height: auto;
-        position: relative;
-        overflow: hidden;
-        /*hides scroll bar*/
         position: sticky;
-
-    }
-
-    .sidebuttons {
-        position: relative;
-        font-size: 4vw;
-        top: 5px;
+        overflow: hidden;
     }
 
     .sidenav a {
@@ -540,7 +404,6 @@ table {
     }
 }
 
-/*displays the bar vertically*/
 @media screen and (max-width: 400px) {
     .sidenav a {
         text-align: center;
@@ -551,5 +414,3 @@ table {
         width: 40%;
     }
 }
-
-
