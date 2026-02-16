@@ -16,7 +16,6 @@ function doLogin() {
 
     document.getElementById("loginResult").innerHTML = "";
 
-    //let tmp = {login:login,password:password};
     var tmp = { login: login, password: hash };
     let jsonPayload = JSON.stringify(tmp);
 
@@ -56,8 +55,22 @@ function doSignup() {
     const lastName = document.getElementById("lastName").value;
     const login = document.getElementById("login").value;
     const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
     document.getElementById("signupResult").innerHTML = "";
+
+    // Password requirement: min 6 chars, at least one special character
+    const passwordRegex = /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+        document.getElementById("signupResult").innerHTML = "Password must be at least 6 characters with one special character.";
+        return;
+    }
+
+    // Password confirmation check
+    if (password !== confirmPassword) {
+        document.getElementById("signupResult").innerHTML = "Passwords do not match.";
+        return;
+    }
 
     let hash = md5(password);
 
@@ -116,16 +129,30 @@ function saveCookie() {
     document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
 }
 
-// Show the add contact modal
 function showAddContactModal() {
     document.getElementById("addContactModal").style.display = "block";
 }
 
 function hideAddContactModal() {
     document.getElementById("addContactModal").style.display = "none";
-    // Clear the form
     document.getElementById("addContactForm").reset();
     document.getElementById("addContactResult").innerHTML = "";
+}
+
+///edtit contact modal, should be pre-poulated with existing contact info
+function showEditContactModal(id, first, last, phone, email) {
+    document.getElementById("editContactModal").style.display = "block";
+    document.getElementById("editContactId").value = id;
+    document.getElementById("editContactFirst").value = first;
+    document.getElementById("editContactLast").value = last;
+    document.getElementById("editContactNumber").value = phone;
+    document.getElementById("editContactEmail").value = email;
+}
+
+function hideEditContactModal() {
+    document.getElementById("editContactModal").style.display = "none";
+    document.getElementById("editContactForm").reset();
+    document.getElementById("editContactResult").innerHTML = "";
 }
 
 function readCookie() {
@@ -172,7 +199,7 @@ function addContact() {
     phone = phone.replace(/\D/g, '');
 
     if(!firstName || !lastName || !phone || !email){
-        document.getElementById("addContactResult").innerHTML = "All fields are required.";
+        document.getElementById("addContactResult").innerHTML = "<span style='color: red;'>All fields are required.</span>";
         return;
     }
 
@@ -203,7 +230,7 @@ function addContact() {
                     return;
                 }
 
-                document.getElementById("addContactResult").innerHTML = "Contact added successfully.";
+                document.getElementById("addContactResult").innerHTML = "<span style='color: cornsilk;'>Contact added successfully.</span>";
 
                 setTimeout(function() {
                     hideAddContactModal();
@@ -221,6 +248,62 @@ catch (err) {
 }
 }
 
+function editContact() {
+    let id = document.getElementById("editContactId").value;
+    let editFirst = document.getElementById("editContactFirst").value;
+    let editLast = document.getElementById("editContactLast").value;
+    let editPhone = document.getElementById("editContactNumber").value;
+    let editEmail = document.getElementById("editContactEmail").value;
+
+    document.getElementById("editContactResult").innerHTML = "";
+    editPhone = editPhone.replace(/\D/g, '');
+
+    if (!editFirst || !editLast || !editPhone || !editEmail) {
+        document.getElementById("editContactResult").innerHTML = "<span style='color: red;'>All fields are required.</span>";
+        return;
+    }
+
+    let payload = {
+        id: parseInt(id),
+        firstName: editFirst,
+        lastName: editLast,
+        phone: editPhone,
+        email: editEmail
+    };
+
+    let url = urlBase + '/EditContact.' + extension;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState != 4) return;
+
+            if (this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+
+                if (jsonObject.error && jsonObject.error.length > 0) {
+                    document.getElementById("editContactResult").innerHTML = jsonObject.error;
+                    return;
+                }
+
+                document.getElementById("editContactResult").innerHTML = "<span style='color: cornsilk;'>Contact updated successfully.</span>";
+
+                setTimeout(function () {
+                    hideEditContactModal();
+                    searchContact();
+                }, 1000);
+            }
+            else {
+                document.getElementById("editContactResult").innerHTML = "<span style='color: red;'>Failed to update contact.</span>";
+            }
+        };
+        xhr.send(JSON.stringify(payload));
+    } catch (err) {
+        document.getElementById("editContactResult").innerHTML = err.message;
+    }
+}
 
 function searchContact() {
     readCookie();
@@ -250,7 +333,7 @@ function searchContact() {
             let jsonObject = JSON.parse(xhr.responseText);
 
             if (jsonObject.error && jsonObject.error.length > 0) {
-                document.getElementById("tbody").innerHTML = 
+                document.getElementById("tbody").innerHTML =
                     '<tr><td colspan="5" style="color: red;">' + jsonObject.error + '</td></tr>';
                 return;
             }
@@ -264,7 +347,8 @@ function searchContact() {
                     "<td>" + contact.phone + "</td>" +
                     "<td>" + contact.email + "</td>" +
                     "<td>" +
-                        '<button class="delete-btn" onclick="deleteContact(' + contact.id + ')">Delete</button>' +
+                        '<button class="action-btn" onclick="showEditContactModal(' + contact.id + ', \'' + contact.firstName + '\', \'' + contact.lastName + '\', \'' + contact.phone + '\', \'' + contact.email + '\')" title="Edit"><i class="fas fa-edit" style="color: #371722;"></i></button>' +
+                        '<button class="action-btn" onclick="deleteContact(' + contact.id + ')" title="Delete"><i class="fas fa-trash-alt" style="color: #371722;"></i></button>' +
                     "</td>" +
                     "</tr>";
             }
@@ -327,6 +411,3 @@ function deleteContact(contactId) {
         alert("Error: " + err.message);
     }
 }
-
-
-
