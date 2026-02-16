@@ -35,7 +35,7 @@
 		  //search by first and last name
 		} else {
 
-			$stmt = $conn->prepare("select ID, FirstName, LastName, Phone, Email from Contacts where (FirstName like ? or LastName like ?) and UserID=? order by LastName, FirstName");
+			$stmt = $conn->prepare("select ID, FirstName, LastName, Phone, Email from Contacts where FirstName like ? and LastName like ? and UserID=? order by LastName, FirstName");
 			$stmt->bind_param("ssi", $firstName, $lastName, $inData["userId"]);
 
 		}

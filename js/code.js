@@ -224,12 +224,13 @@ catch (err) {
 
 function searchContact() {
     readCookie();
-    let srch = document.getElementById("searchText").value.trim();
+    let firstName = document.getElementById("searchFirstName").value.trim();
+    let lastName = document.getElementById("searchLastName").value.trim();
     document.getElementById("tbody").innerHTML = "";
 
     let searchId = {
-        firstNameSearch: srch,
-        lastNameSearch: srch,
+        firstNameSearch: firstName,
+        lastNameSearch: lastName,
         userId: userId
     };
 
