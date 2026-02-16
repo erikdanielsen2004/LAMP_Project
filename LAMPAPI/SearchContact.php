@@ -16,28 +16,26 @@
 		$firstName = "%" . $inData["firstNameSearch"] . "%";
 		$lastName = "%" . $inData["lastNameSearch"] . "%";
 
-		//loads all contacts so we dont have to make load contact
+		//loads all contacts 
 		if ($lastName == "%%" && $firstName == "%%") {
 
-			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where UserId=? order by LastName, FirstName");
+			$stmt = $conn->prepare("select ID, FirstName, LastName, Phone, Email from Contacts where UserId=? order by LastName, FirstName");
 			$stmt->bind_param("i", $inData["userId"]);
 
-		  //searchs by first name
+		  //search by first name
 		} else if ($lastName == "%%") {
 
-			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where FirstName like ? and UserID=? order by LastName, FirstName");
+			$stmt = $conn->prepare("select ID, FirstName, LastName, Phone, Email from Contacts where FirstName like ? and UserID=? order by LastName, FirstName");
 			$stmt->bind_param("si", $firstName, $inData["userId"]);
-
-		  //searchs by last name
+		  //search by last name
 		} else if ($firstName == "%%") {
 
-			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where LastName like ? and UserId=? order by LastName, FirstName");
+			$stmt = $conn->prepare("select ID, FirstName, LastName, Phone, Email from Contacts where LastName like ? and UserId=? order by LastName, FirstName");
 			$stmt->bind_param("si", $lastName, $inData["userId"]);
-			
-		  //searchs by first and last name
+		  //search by first and last name
 		} else {
 
-			$stmt = $conn->prepare("select FirstName, LastName, Phone, Email from Contacts where (FirstName like ? or LastName like ?) and UserID=? order by LastName, FirstName");
+			$stmt = $conn->prepare("select ID, FirstName, LastName, Phone, Email from Contacts where (FirstName like ? or LastName like ?) and UserID=? order by LastName, FirstName");
 			$stmt->bind_param("ssi", $firstName, $lastName, $inData["userId"]);
 
 		}
@@ -52,7 +50,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{"firstName":"' . $row["FirstName"] . '","lastName":"' . $row["LastName"] . '","phone":"' . $row["Phone"] . '","email":"' . $row["Email"] . '"}';
+			$searchResults .= '{"id":' . $row["ID"] . ',"firstName":"' . $row["FirstName"] . '","lastName":"' . $row["LastName"] . '","phone":"' . $row["Phone"] . '","email":"' . $row["Email"] . '"}';
 		}
 		
 		if( $searchCount == 0 )

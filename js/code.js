@@ -171,7 +171,7 @@ function addContact() {
     document.getElementById("addContactResult").innerHTML = "";
     phone = phone.replace(/\D/g, '');
 
-    if (!firstName || !lastName || !phone || !email) {
+    if(!firstName || !lastName || !phone || !email){
         document.getElementById("addContactResult").innerHTML = "All fields are required.";
         return;
     }
@@ -205,23 +205,25 @@ function addContact() {
 
                 document.getElementById("addContactResult").innerHTML = "Contact added successfully.";
 
-                setTimeout(function () {
+                setTimeout(function() {
                     hideAddContactModal();
                     searchContact();
                 }, 1000);
             }
-            else {
-                document.getElementById("addContactResult").innerHTML = "Failed to add contact.";
-            }
-        };
-        xhr.send(jsonPayload);
-    }
-    catch (err) {
-        document.getElementById("addContactResult").innerHTML = err.message;
-    }
+        else {
+            document.getElementById("addContactResult").innerHTML = "Failed to add contact.";
+        }
+    };
+    xhr.send(jsonPayload);
+}
+catch (err) {
+    document.getElementById("addContactResult").innerHTML = err.message;
+}
 }
 
+
 function searchContact() {
+    readCookie();
     let srch = document.getElementById("searchText").value.trim();
     document.getElementById("tbody").innerHTML = "";
 
@@ -241,38 +243,41 @@ function searchContact() {
             if (this.readyState != 4)
                 return;
             if (this.status != 200) {
-                document.getElementById("tbody").innerHTML = "Search Failed";
+                document.getElementById("tbody").innerHTML = '<tr><td colspan="5">Search Failed</td></tr>';
                 return;
             }
             let jsonObject = JSON.parse(xhr.responseText);
 
             if (jsonObject.error && jsonObject.error.length > 0) {
-                document.getElementById("tbody").innerHTML =
-                    '<tr><td style="color: red;">' + jsonObject.error + '</td></tr>';
+                document.getElementById("tbody").innerHTML = 
+                    '<tr><td colspan="5" style="color: red;">' + jsonObject.error + '</td></tr>';
                 return;
             }
 
             let tableRows = "";
             for (let i = 0; i < jsonObject.results.length; i++) {
+                let contact = jsonObject.results[i];
                 tableRows += "<tr>" +
-                    "<td>" + jsonObject.results[i].firstName + "</td>" +
-                    "<td>" + jsonObject.results[i].lastName + "</td>" +
-                    "<td>" + jsonObject.results[i].phone + "</td>" +
-                    "<td>" + jsonObject.results[i].email + "</td>" +
+                    "<td>" + contact.firstName + "</td>" +
+                    "<td>" + contact.lastName + "</td>" +
+                    "<td>" + contact.phone + "</td>" +
+                    "<td>" + contact.email + "</td>" +
+                    "<td>" +
+                        '<button class="delete-btn" onclick="deleteContact(' + contact.id + ')">Delete</button>' +
+                    "</td>" +
                     "</tr>";
             }
 
-            if (jsonObject.results.length === 0) {
-                tableRows = "<tr><td>No contacts found</td></tr>";
+            if(jsonObject.results.length === 0){
+                tableRows = '<tr><td colspan="5">No contacts found</td></tr>';
             }
             document.getElementById("tbody").innerHTML = tableRows;
         };
         xhr.send(JSON.stringify(searchId));
     }
     catch (err) {
-        document.getElementById("contactSearchResult").innerHTML = err.message;
+        document.getElementById("tbody").innerHTML = '<tr><td colspan="5">' + err.message + '</td></tr>';
     }
-
 }
 
 function deleteContact(contactId) {
@@ -288,7 +293,7 @@ function deleteContact(contactId) {
     };
     let jsonPayload = JSON.stringify(payload);
 
-    let url = urlBase + '/DeleteContact.' + extension;
+    let url = urlBase + '/Delete.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -321,5 +326,6 @@ function deleteContact(contactId) {
         alert("Error: " + err.message);
     }
 }
+
 
 

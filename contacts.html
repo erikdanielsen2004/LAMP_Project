@@ -2,25 +2,24 @@
 <html>
 <head>
 
-	<title>Group 18 Contacts page</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/contacts.css" />
-	<script type="text/javascript" src="js/code.js"></script>
-	<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
-	<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Group 18 Contacts page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/contacts.css" />
+    <script type="text/javascript" src="js/code.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript">
+    <script type="text/javascript">
 
-
-		document.addEventListener('DOMContentLoaded', function () {
-			readCookie();
-			loadContacts();
-		}, false);
-	</script>
+        document.addEventListener('DOMContentLoaded', function () {
+            readCookie();
+            searchContact();
+        }, false);
+    </script>
 </head>
 <div class="sidenav">
         <div class="sidenav-content">
@@ -31,86 +30,85 @@
         </div>
 
         <a href="#" class="search-btn" type="button" id="logoutButton" class="buttons font"
-						onclick="doLogout();"> logout <i class="fas fa-sign-out-alt"></i> </a>
+                        onclick="doLogout();"> logout <i class="fas fa-sign-out-alt"></i> </a>
 
         </a>
     </div>
 
-	<div class="content">
-		<div class="loggedInDiv">
-			<span style="color:#007D2F" id="userName"></span><br />
-		</div>
-		<div class="accessUIDiv">
-			<br />
-			<div class="column">
-				<div class="search-container">
-					<input onkeyup="searchContact()" type="text" name="search" id="searchText" placeholder="Search..."
-						class="search-input">
-					<a href="#" class="search-btn" type="button" id="searchContactButton" class="buttons font"
-						onclick="searchContact();"><i class="fas fa-search"></i></a>
-				</div>
-			</div>
-			<div class="column">
-				<button type="button" class="add-contact-btn" title="Refresh Contacts" onclick="loadContacts()">
-					<i class="fas fa-sync-alt" style="font-size:30px;color: cornsilk;" aria-hidden="true"></i>
-				</button>
-			</div>
-			<div class="column">
-				<button type="button" class="add-contact-btn" title="Add New Contact" onclick="showAddContactModal()">
-					<i class="fas fa-user-plus" style="font-size:27px;"></i>
-				</button>
-			</div>
-		</div>
+    <div class="content">
+        <div class="loggedInDiv">
+            <span style="color:#007D2F" id="userName"></span><br />
+        </div>
+        <div class="accessUIDiv">
+            <br />
+            <div class="column">
+                <div class="search-container">
+                    <input onkeyup="searchContact()" type="text" name="search" id="searchText" placeholder="Search..."
+                        class="search-input">
+                    <a href="#" class="search-btn" type="button" id="searchContactButton" class="buttons font"
+                        onclick="searchContact();"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+            <div class="column">
+                <button type="button" class="add-contact-btn" onclick="loadContacts()">
+                    <i class="fas fa-sync-alt" style="font-size:30px;color: cornsilk;" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="column">
+                <button type="button" class="add-contact-btn" onclick="showAddContactModal()">
+                    <i class="fas fa-user-plus" style="font-size:27px;"></i>
+                </button>
+            </div>
+        </div>
 
-		<!--contact table-->
-		<div class="tables">
-			<div class="tbl-content" id="contactsTable">
-				<table id="contacts" cellpadding="0" cellspacing="0" border="0">
-					<thead>
-						<tr>
-							<th>Contact Name</th>
-						</tr>
-					</thead>
-					<tbody id="tbody"></tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+        <!--contact table-->
+        <div class="tables">
+            <div class="tbl-content" id="contactsTable">
+                <table id="contacts" cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            <th>Contact Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+							<th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-	<!-- Add Contact Modal -->
-	<div id="addContactModal" class="modal">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h2>Add New Contact</h2>
-			</div>
-			<form id="addContactForm" onsubmit="event.preventDefault(); addContact();">
-				<div class="form-group">
-					<label for="contactFirst">First Name *</label>
-					<input type="text" id="contactFirst" placeholder="First name" required>
-				</div>
-				<div class="form-group">
-					<label for="contactLast">Last Name *</label>
-					<input type="text" id="contactLast" placeholder="Last name" required>
-				</div>
-				<div class="form-group">
-					<label for="contactNumber">Phone Number *</label>
-					<input type="text" id="contactNumber" placeholder="XXX-XXX-XXXX" required
-						pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
-					<small style="color: #666;"></small>
-				</div>
-				<div class="form-group">
-					<label for="contactEmail">Email *</label>
-					<input type="email" id="contactEmail" placeholder="name@email.com" required
-						pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
-				</div>
-				<div id="addContactResult"></div>
-				<div class="modal-buttons">
-					<button type="button" class="btn-cancel" onclick="hideAddContactModal()">Cancel</button>
-					<button type="submit" class="btn-submit" onclick="addContact()">Add Contact</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</body>
+    <!-- Add Contact Modal -->
+    <div id="addContactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Contact</h2>
+            </div>
+            <form id="addContactForm" onsubmit="event.preventDefault(); addContact();">
+                <div class="form-group">
+                    <label for="contactFirst">First Name *</label>
+                    <input type="text" id="contactFirst" placeholder="First name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactLast">Last Name *</label>
+                    <input type="text" id="contactLast" placeholder="Last name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactNumber">Phone Number *</label>
+                    <input type="text" id="contactNumber" placeholder="XXX-XXX-XXXX" required
+                        pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
+                    <small style="color: #666;"></small>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email *</label>
+                    <input type="email" id="contactEmail" placeholder="name@email.com" required
+                        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$">
+                </div>
+                <div id="addContactResult"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="hideAddContactModal()">Cancel</button>
+                    <button type="button" class="btn-submit" onclick="addContact()">Add Contact</button>
+                </div>
 
-</html>
