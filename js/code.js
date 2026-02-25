@@ -139,7 +139,7 @@ function hideAddContactModal() {
     document.getElementById("addContactResult").innerHTML = "";
 }
 
-///edtit contact modal, should be pre-poulated with existing contact info
+///edit contact modal, should be pre-poulated with existing contact info
 function showEditContactModal(id, first, last, phone, email) {
     document.getElementById("editContactModal").style.display = "block";
     document.getElementById("editContactId").value = id;
@@ -401,7 +401,6 @@ function deleteContact(contactId) {
                 return;
             }
 
-            alert(jsonObject.message || "Contact deleted successfully");
             searchContact();
         };
 
