@@ -139,7 +139,7 @@ function hideAddContactModal() {
     document.getElementById("addContactResult").innerHTML = "";
 }
 
-///edit contact modal, should be pre-poulated with existing contact info
+///edtit contact modal, should be pre-poulated with existing contact info
 function showEditContactModal(id, first, last, phone, email) {
     document.getElementById("editContactModal").style.display = "block";
     document.getElementById("editContactId").value = id;
@@ -199,7 +199,7 @@ function addContact() {
     phone = phone.replace(/\D/g, '');
 
     if(!firstName || !lastName || !phone || !email){
-        document.getElementById("addContactResult").innerHTML = "<span style='color: red;'>All fields are required.</span>";
+        document.getElementById("addContactResult").innerHTML = "<span style='color: #d32f2f; font-weight: bold;'>All fields are required.</span>";
         return;
     }
 
@@ -226,9 +226,9 @@ function addContact() {
                 let jsonObject = JSON.parse(xhr.responseText);
 
                 if (jsonObject.error && jsonObject.error.length > 0) {
-                    document.getElementById("addContactResult").innerHTML = jsonObject.error;
-                    return;
-                }
+                    document.getElementById("addContactResult").innerHTML = "<span style='color: #d32f2f; font-weight: bold;'>" + jsonObject.error + "</span>";
+                return;
+            }
 
                 document.getElementById("addContactResult").innerHTML = "<span style='color: cornsilk;'>Contact added successfully.</span>";
 
@@ -259,7 +259,7 @@ function editContact() {
     editPhone = editPhone.replace(/\D/g, '');
 
     if (!editFirst || !editLast || !editPhone || !editEmail) {
-        document.getElementById("editContactResult").innerHTML = "<span style='color: red;'>All fields are required.</span>";
+        document.getElementById("editContactResult").innerHTML = "<span style='color: #d32f2f; font-weight: bold;'>All fields are required.</span>";
         return;
     }
 
@@ -284,7 +284,7 @@ function editContact() {
                 let jsonObject = JSON.parse(xhr.responseText);
 
                 if (jsonObject.error && jsonObject.error.length > 0) {
-                    document.getElementById("editContactResult").innerHTML = jsonObject.error;
+                    document.getElementById("editContactResult").innerHTML = "<span style='color: #d32f2f; font-weight: bold;'>" + jsonObject.error + "</span>";
                     return;
                 }
 
