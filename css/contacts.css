@@ -383,6 +383,17 @@ table {
     padding: 10px;
     border-radius: 5px;
     text-align: center;
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+#editContactResult {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: #d32f2f;
+    font-weight: bold;
 }
 
 .form-group small {
